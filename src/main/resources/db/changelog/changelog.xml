@@ -1,0 +1,120 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.13.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd">
+    <changeSet author="pmnghia" id="1">
+        <createTable tableName="project">
+            <column name="project_id" type="VARCHAR(255)">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="project_pkey"/>
+            </column>
+            <column name="project_name" type="VARCHAR(255)"/>
+            <column name="description" type="TEXT"/>
+            <column name="client" type="VARCHAR(255)"/>
+            <column name="start_date" type="date"/>
+            <column name="end_date" type="date"/>
+            <column name="status" type="VARCHAR(15)"/>
+            <column name="note" type="TEXT"/>
+            <column name="project_leader" type="VARCHAR(15)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="pmnghia" id="2">
+        <createTable tableName="staff">
+            <column name="staff_id" type="VARCHAR(15)">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="staff_pkey"/>
+            </column>
+            <column name="account" type="VARCHAR(15)"/>
+            <column name="full_name" type="VARCHAR(255)"/>
+            <column name="first_name" type="VARCHAR(15)"/>
+            <column name="email" type="VARCHAR(63)"/>
+            <column name="gender" type="VARCHAR(1)"/>
+            <column name="status" type="VARCHAR(15)"/>
+            <column name="birth_date" type="date"/>
+            <column name="join_date" type="date"/>
+            <column name="full_time_start" type="date"/>
+            <column name="leave_date" type="date"/>
+            <column name="unit" type="VARCHAR(255)"/>
+            <column name="current_job_title" type="VARCHAR(255)"/>
+            <column name="professional_start" type="date"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="pmnghia" id="3">
+        <createTable tableName="staff_project">
+            <column autoIncrement="true" name="staff_project_id" type="INTEGER">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="staff_project_pkey"/>
+            </column>
+            <column name="staff_id" type="VARCHAR(15)"/>
+            <column name="project_id" type="VARCHAR(255)"/>
+            <column name="start_date" type="date"/>
+            <column name="end_date" type="date"/>
+            <column name="status" type="VARCHAR(15)"/>
+            <column name="note" type="TEXT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="pmnghia" id="4">
+        <addForeignKeyConstraint baseColumnNames="project_leader" baseTableName="project"
+                                 constraintName="project_project_leader_fkey" deferrable="false"
+                                 initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT"
+                                 referencedColumnNames="staff_id" referencedTableName="staff" validate="true"/>
+    </changeSet>
+    <changeSet author="pmnghia" id="5">
+        <addForeignKeyConstraint baseColumnNames="project_id" baseTableName="staff_project"
+                                 constraintName="staff_project_project_id_fkey" deferrable="false"
+                                 initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT"
+                                 referencedColumnNames="project_id" referencedTableName="project" validate="true"/>
+    </changeSet>
+    <changeSet author="pmnghia" id="6">
+        <addForeignKeyConstraint baseColumnNames="staff_id" baseTableName="staff_project"
+                                 constraintName="staff_project_staff_id_fkey" deferrable="false"
+                                 initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT"
+                                 referencedColumnNames="staff_id" referencedTableName="staff" validate="true"/>
+    </changeSet>
+
+    <!-- Add dummy data -->
+    <changeSet author="pmnghia" id="7">
+        <sql>
+            DELETE FROM staff_project;
+            DELETE FROM project;
+            DELETE FROM staff;
+
+            INSERT INTO staff (staff_id, full_name, email, gender, birth_date, join_date)
+            VALUES
+            ('S1', '1 full name', '1@email.com', 'M', '1990-01-10', CURRENT_DATE - 50),
+            ('S2', '2 full name', '2@email.com', 'F', '1990-02-20', CURRENT_DATE - 504),
+            ('S3', '3 full name', '3@email.com', 'M', '1990-03-20', CURRENT_DATE - 250),
+            ('S4', '4 full name', '4@email.com', 'F', '1990-04-20', CURRENT_DATE - 342),
+            ('S5', '5 full name', '5@email.com', 'M', '1990-05-20', CURRENT_DATE - 976),
+            ('S6', '6 full name', '6@email.com', 'F', '1990-06-20', CURRENT_DATE - 850);
+
+            INSERT INTO project
+            VALUES
+            ('P1001', 'Project 1', 'Project 1', 'Client 1', CURRENT_DATE - 10, CURRENT_DATE - 1, 'Status 1', 'Note 1',
+            'S3'),
+            ('P1002', 'Project 2', 'Project 2', 'Client 2', CURRENT_DATE - 20, CURRENT_DATE - 2, 'Status 2', 'Note 2',
+            'S5'),
+            ('P1003', 'Project 3', 'Project 3', 'Client 3', CURRENT_DATE - 30, CURRENT_DATE - 3, 'Status 3', 'Note 3',
+            'S5'),
+            ('P1004', 'Project 4', 'Project 4', 'Client 4', CURRENT_DATE - 40, CURRENT_DATE - 4, 'Status 4', 'Note 4',
+            'S6'),
+            ('P1005', 'Project 5', 'Project 5', 'Client 5', CURRENT_DATE - 50, CURRENT_DATE - 5, 'Status 5', 'Note 5',
+            'S6'),
+            ('P1006', 'Project 6', 'Project 6', 'Client 6', CURRENT_DATE - 60, CURRENT_DATE - 6, 'Status 6', 'Note 6',
+            'S6');
+
+            INSERT INTO staff_project
+            VALUES
+            (101, 'S1', 'P1001', CURRENT_DATE - 20, CURRENT_DATE - 3, 'Status 101', 'Note 101'),
+            (102, 'S1', 'P1002', CURRENT_DATE - 22, CURRENT_DATE - 3, 'Status 102', 'Note 102'),
+            (103, 'S1', 'P1003', CURRENT_DATE - 40, CURRENT_DATE - 4, 'Status 103', 'Note 103'),
+            (104, 'S2', 'P1001', CURRENT_DATE - 50, CURRENT_DATE - 3, 'Status 104', 'Note 104'),
+            (105, 'S3', 'P1001', CURRENT_DATE - 20, CURRENT_DATE - 1, 'Status 105', 'Note 105'),
+            (106, 'S3', 'P1002', CURRENT_DATE - 40, CURRENT_DATE - 3, 'Status 106', 'Note 106'),
+            (107, 'S4', 'P1003', CURRENT_DATE - 20, CURRENT_DATE - 0, 'Status 107', 'Note 107'),
+            (108, 'S5', 'P1002', CURRENT_DATE - 40, CURRENT_DATE - 3, 'Status 108', 'Note 108'),
+            (109, 'S5', 'P1003', CURRENT_DATE - 30, CURRENT_DATE - 4, 'Status 109', 'Note 109'),
+            (110, 'S6', 'P1004', CURRENT_DATE - 20, CURRENT_DATE - 8, 'Status 110', 'Note 110'),
+            (111, 'S6', 'P1005', CURRENT_DATE - 60, CURRENT_DATE - 9, 'Status 111', 'Note 111'),
+            (112, 'S6', 'P1006', CURRENT_DATE - 20, CURRENT_DATE - 7, 'Status 112', 'Note 112');
+        </sql>
+    </changeSet>
+</databaseChangeLog>
