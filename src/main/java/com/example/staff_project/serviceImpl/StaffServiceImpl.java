@@ -1,6 +1,7 @@
 package com.example.staff_project.serviceImpl;
 
 import com.example.staff_project.entity.Staff;
+import com.example.staff_project.exception.MyException;
 import com.example.staff_project.repository.StaffRepository;
 import com.example.staff_project.service.StaffService;
 import com.example.staff_project.utility.Helper;
@@ -29,7 +30,7 @@ public class StaffServiceImpl implements StaffService {
 
     @Override
     public Staff getStaff(String staffId) throws Exception {
-        Staff staff = staffRepository.findById(staffId).orElse(null);
+        Staff staff = staffRepository.findById(staffId).orElseThrow(() -> new MyException("StaffService.STAFF_NOT_FOUND"));
         return staff;
     }
 
@@ -39,15 +40,15 @@ public class StaffServiceImpl implements StaffService {
     }
 
     @Override
-    public Staff updateStaff(String staffId, Staff updatedStaff) {
-        Staff staff = staffRepository.findById(staffId).orElse(null);
+    public Staff updateStaff(String staffId, Staff updatedStaff) throws Exception {
+        Staff staff = staffRepository.findById(staffId).orElseThrow(() -> new MyException("StaffService.STAFF_NOT_FOUND"));
         Helper.copyStaffInfo(staff, updatedStaff);
         return staffRepository.save(staff);
     }
 
     @Override
     public Staff deleteStaff(String staffId) throws Exception {
-        Staff staff = staffRepository.findById(staffId).orElse(null);
+        Staff staff = staffRepository.findById(staffId).orElseThrow(() -> new MyException("StaffService.STAFF_NOT_FOUND"));
         staffRepository.deleteById(staffId);
         return staff;
     }

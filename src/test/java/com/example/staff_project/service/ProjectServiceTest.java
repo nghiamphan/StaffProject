@@ -2,6 +2,7 @@ package com.example.staff_project.service;
 
 import com.example.staff_project.entity.Project;
 import com.example.staff_project.entity.Staff;
+import com.example.staff_project.exception.MyException;
 import com.example.staff_project.helper.Helper;
 import com.example.staff_project.repository.ProjectRepository;
 import com.example.staff_project.repository.StaffRepository;
@@ -56,6 +57,14 @@ public class ProjectServiceTest {
         String projectId = "P1000";
         Mockito.when(projectRepository.findById(projectId)).thenReturn(Helper.getProjectById(projects, projectId));
         Assertions.assertEquals(projects.get(0), projectService.getProject(projectId));
+    }
+
+    @Test void getProjectInvalidId() throws Exception {
+        String projectId = "invalid id";
+
+        Mockito.when(projectRepository.findById(projectId)).thenReturn(Helper.getProjectById(projects, projectId));
+        MyException e = Assertions.assertThrows(MyException.class, () -> projectService.getProject(projectId));
+        Assertions.assertEquals("ProjectService.PROJECT_NOT_FOUND", e.getMessage());
     }
 
     @Test

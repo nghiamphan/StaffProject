@@ -3,6 +3,7 @@ package com.example.staff_project.serviceImpl;
 import com.example.staff_project.entity.Project;
 import com.example.staff_project.entity.Staff;
 import com.example.staff_project.entity.StaffProject;
+import com.example.staff_project.exception.MyException;
 import com.example.staff_project.repository.ProjectRepository;
 import com.example.staff_project.repository.StaffProjectRepository;
 import com.example.staff_project.repository.StaffRepository;
@@ -38,19 +39,19 @@ public class StaffProjectServiceImpl implements StaffProjectService {
 
     @Override
     public StaffProject getStaffProject(int staffProjectId) throws Exception {
-        StaffProject staffProject = staffProjectRepository.findById(staffProjectId).orElse(null);
+        StaffProject staffProject = staffProjectRepository.findById(staffProjectId).orElseThrow(() -> new MyException("StaffProjectService.STAFF_PROJECT_NOT_FOUND"));
         return staffProject;
     }
 
     @Override
     public StaffProject createStaffProject(StaffProject staffProject) throws Exception {
         if (staffProject.getStaff() != null) {
-            Staff staff = staffRepository.findById(staffProject.getStaff().getStaffId()).orElse(null);
+            Staff staff = staffRepository.findById(staffProject.getStaff().getStaffId()).orElseThrow(() -> new MyException("StaffService.STAFF_NOT_FOUND"));
             staffProject.setStaff(staff);
         }
 
         if (staffProject.getProject() != null) {
-            Project project = projectRepository.findById(staffProject.getProject().getProjectId()).orElse(null);
+            Project project = projectRepository.findById(staffProject.getProject().getProjectId()).orElseThrow(() -> new MyException("ProjectService.PROJECT_NOT_FOUND"));
             staffProject.setProject(project);
         }
 
@@ -59,16 +60,16 @@ public class StaffProjectServiceImpl implements StaffProjectService {
 
     @Override
     public StaffProject updateStaffProject(int staffProjectId, StaffProject updatedStaffProject) throws Exception {
-        StaffProject staffProject = staffProjectRepository.findById(staffProjectId).orElse(null);
+        StaffProject staffProject = staffProjectRepository.findById(staffProjectId).orElseThrow(() -> new MyException("StaffProjectService.STAFF_PROJECT_NOT_FOUND"));
         Helper.copyStaffProjectInfo(staffProject, updatedStaffProject);
 
         if (updatedStaffProject.getStaff() != null) {
-            Staff staff = staffRepository.findById(updatedStaffProject.getStaff().getStaffId()).orElse(null);
+            Staff staff = staffRepository.findById(updatedStaffProject.getStaff().getStaffId()).orElseThrow(() -> new MyException("StaffService.STAFF_NOT_FOUND"));
             staffProject.setStaff(staff);
         }
 
         if (updatedStaffProject.getProject() != null) {
-            Project project = projectRepository.findById(updatedStaffProject.getProject().getProjectId()).orElse(null);
+            Project project = projectRepository.findById(updatedStaffProject.getProject().getProjectId()).orElseThrow(() -> new MyException("ProjectService.PROJECT_NOT_FOUND"));
             staffProject.setProject(project);
         }
 
@@ -77,7 +78,7 @@ public class StaffProjectServiceImpl implements StaffProjectService {
 
     @Override
     public StaffProject deleteStaffProject(int staffProjectId) throws Exception {
-        StaffProject staffProject = staffProjectRepository.findById(staffProjectId).orElse(null);
+        StaffProject staffProject = staffProjectRepository.findById(staffProjectId).orElseThrow(() -> new MyException("StaffProjectService.STAFF_PROJECT_NOT_FOUND"));
         staffProjectRepository.deleteById(staffProjectId);
         return staffProject;
     }

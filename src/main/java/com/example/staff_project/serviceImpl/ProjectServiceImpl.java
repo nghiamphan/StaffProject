@@ -2,6 +2,7 @@ package com.example.staff_project.serviceImpl;
 
 import com.example.staff_project.entity.Project;
 import com.example.staff_project.entity.Staff;
+import com.example.staff_project.exception.MyException;
 import com.example.staff_project.repository.ProjectRepository;
 import com.example.staff_project.repository.StaffRepository;
 import com.example.staff_project.service.ProjectService;
@@ -22,7 +23,7 @@ public class ProjectServiceImpl implements ProjectService {
     private StaffRepository staffRepository;
 
     @Override
-    public List<Project> getProjects() {
+    public List<Project> getProjects() throws Exception {
         Iterable<Project> iterable = projectRepository.findAll();
         List<Project> projects = new ArrayList<>();
         for (Project project : iterable) {
@@ -32,15 +33,15 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public Project getProject(String projectId) {
-        Project project = projectRepository.findById(projectId).orElse(null);
+    public Project getProject(String projectId) throws Exception {
+        Project project = projectRepository.findById(projectId).orElseThrow(() -> new MyException("ProjectService.PROJECT_NOT_FOUND"));
         return project;
     }
 
     @Override
     public Project createProject(Project project) throws Exception {
         if (project.getProjectLeader() != null) {
-            Staff projectLeader = staffRepository.findById(project.getProjectLeader().getStaffId()).orElse(null);
+            Staff projectLeader = staffRepository.findById(project.getProjectLeader().getStaffId()).orElseThrow(() -> new MyException("StaffService.STAFF_NOT_FOUND"));
             project.setProjectLeader(projectLeader);
         }
         return projectRepository.save(project);
@@ -48,11 +49,11 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public Project updateProject(String projectId, Project updatedProject) throws Exception {
-        Project project = projectRepository.findById(projectId).orElse(null);
+        Project project = projectRepository.findById(projectId).orElseThrow(() -> new MyException("ProjectService.PROJECT_NOT_FOUND"));
         Helper.copyProjectInfo(project, updatedProject);
 
         if (updatedProject.getProjectLeader() != null) {
-            Staff projectLeader = staffRepository.findById(project.getProjectLeader().getStaffId()).orElse(null);
+            Staff projectLeader = staffRepository.findById(project.getProjectLeader().getStaffId()).orElseThrow(() -> new MyException("StaffService.STAFF_NOT_FOUND"));
             project.setProjectLeader(projectLeader);
         }
         return projectRepository.save(project);
@@ -60,7 +61,7 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public Project deleteProject(String projectId) throws Exception {
-        Project project = projectRepository.findById(projectId).orElse(null);
+        Project project = projectRepository.findById(projectId).orElseThrow(() -> new MyException("ProjectService.PROJECT_NOT_FOUND"));
         projectRepository.deleteById(projectId);
         return project;
     }
