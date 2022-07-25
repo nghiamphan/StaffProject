@@ -1,9 +1,9 @@
 package com.example.staff_project.service;
 
 import com.example.staff_project.entity.Staff;
+import com.example.staff_project.exception.MyException;
 import com.example.staff_project.helper.Helper;
 import com.example.staff_project.repository.StaffRepository;
-import com.example.staff_project.service.StaffService;
 import com.example.staff_project.serviceImpl.StaffServiceImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,7 +15,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @SpringBootTest
 public class StaffServiceTest {
@@ -48,8 +47,20 @@ public class StaffServiceTest {
     }
 
     @Test
+    public void getStaffInvalidStaffId() throws Exception {
+        String invalidStaffId = "invalid staff id";
+
+        Mockito.when(staffRepository.findById(invalidStaffId)).thenReturn(Helper.getStaffById(staffs, invalidStaffId));
+
+        MyException e = Assertions.assertThrows(MyException.class, () -> staffService.getStaff(invalidStaffId));
+        Assertions.assertEquals("StaffService.STAFF_NOT_FOUND", e.getMessage());
+    }
+
+    @Test
     public void createStaff() throws Exception {
-        Staff newStaff = new Staff("S3", null, "Staff 3 full name", null, null, null, null, null, null, null, null, null, null, null);
+        String newStaffId = "S3";
+        Staff newStaff = new Staff(newStaffId, null, "Staff 3 full name", null, null, null, null, null, null, null, null, null, null, null);
+
         Mockito.when(staffRepository.save(newStaff)).thenReturn(newStaff);
         Assertions.assertEquals(newStaff, staffService.createStaff(newStaff));
     }
@@ -57,7 +68,7 @@ public class StaffServiceTest {
     @Test
     public void updateStaff() throws Exception {
         String staffId = "S0";
-        Staff updatedStaff = new Staff("S0", null, "Updated full name", null, null, null, null, null, null, null, null, null, null, null);
+        Staff updatedStaff = new Staff(staffId, null, "Updated full name", null, null, null, null, null, null, null, null, null, null, null);
 
         Mockito.when(staffRepository.findById(staffId)).thenReturn(Helper.getStaffById(staffs, staffId));
         Mockito.when(staffRepository.save(updatedStaff)).thenReturn(updatedStaff);
@@ -66,9 +77,31 @@ public class StaffServiceTest {
     }
 
     @Test
+    public void updateStaffInvalidStaffId() throws Exception {
+        String invalidStaffId = "invalid staff id";
+        Staff updatedStaff = new Staff(invalidStaffId, null, "Updated full name", null, null, null, null, null, null, null, null, null, null, null);
+
+        Mockito.when(staffRepository.findById(invalidStaffId)).thenReturn(Helper.getStaffById(staffs, invalidStaffId));
+        Mockito.when(staffRepository.save(updatedStaff)).thenReturn(updatedStaff);
+
+        MyException e = Assertions.assertThrows(MyException.class, () -> staffService.updateStaff(invalidStaffId, updatedStaff));
+        Assertions.assertEquals("StaffService.STAFF_NOT_FOUND", e.getMessage());
+    }
+
+    @Test
     public void deleteStaff() throws Exception {
         String staffId = "S0";
         Mockito.when(staffRepository.findById(staffId)).thenReturn(Helper.getStaffById(staffs, staffId));
         Assertions.assertEquals(staffs.get(0), staffService.deleteStaff(staffId));
+    }
+
+    @Test
+    public void deleteStaffInvalidStaffId() throws Exception {
+        String invalidStaffId = "invalid staff id";
+
+        Mockito.when(staffRepository.findById(invalidStaffId)).thenReturn(Helper.getStaffById(staffs, invalidStaffId));
+
+        MyException e = Assertions.assertThrows(MyException.class, () -> staffService.deleteStaff(invalidStaffId));
+        Assertions.assertEquals("StaffService.STAFF_NOT_FOUND", e.getMessage());
     }
 }

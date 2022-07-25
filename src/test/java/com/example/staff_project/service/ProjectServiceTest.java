@@ -6,7 +6,6 @@ import com.example.staff_project.exception.MyException;
 import com.example.staff_project.helper.Helper;
 import com.example.staff_project.repository.ProjectRepository;
 import com.example.staff_project.repository.StaffRepository;
-import com.example.staff_project.service.ProjectService;
 import com.example.staff_project.serviceImpl.ProjectServiceImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -59,30 +58,51 @@ public class ProjectServiceTest {
         Assertions.assertEquals(projects.get(0), projectService.getProject(projectId));
     }
 
-    @Test void getProjectInvalidId() throws Exception {
-        String projectId = "invalid id";
+    @Test void getProjectInvalidProjectId() throws Exception {
+        String invalidProjectId = "invalid project id";
 
-        Mockito.when(projectRepository.findById(projectId)).thenReturn(Helper.getProjectById(projects, projectId));
-        MyException e = Assertions.assertThrows(MyException.class, () -> projectService.getProject(projectId));
+        Mockito.when(projectRepository.findById(invalidProjectId)).thenReturn(Helper.getProjectById(projects, invalidProjectId));
+
+        MyException e = Assertions.assertThrows(MyException.class, () -> projectService.getProject(invalidProjectId));
         Assertions.assertEquals("ProjectService.PROJECT_NOT_FOUND", e.getMessage());
     }
 
     @Test
     public void createProject() throws Exception {
-        Project newProject = new Project("P1003", "Project 3", null, null, null, null, null, null, staffs.get(0));
+        String projectLeaderId = "S0";
+        Staff projectLeader = Helper.getStaffById(staffs, projectLeaderId).get();
+        String newProjectId = "P1003";
+        Project newProject = new Project(newProjectId, "Project 3", null, null, null, null, null, null, projectLeader);
 
-        Mockito.when(staffRepository.findById(newProject.getProjectLeader().getStaffId())).thenReturn(Optional.of(newProject.getProjectLeader()));
+        Mockito.when(staffRepository.findById(projectLeaderId)).thenReturn(Optional.of(projectLeader));
         Mockito.when(projectRepository.save(newProject)).thenReturn(newProject);
 
         Assertions.assertEquals(newProject, projectService.createProject(newProject));
     }
 
     @Test
-    public void updateProject() throws Exception {
-        String projectId = "P1000";
-        Project updatedProject = new Project(projectId, "Updated Project", null, null, null, null, null, null, staffs.get(0));
+    public void createProjectInvalidLeaderId() throws Exception {
+        String invalidStaffId = "invalid staff id";
+        Staff invalidProjectLeader = new Staff();
+        invalidProjectLeader.setStaffId(invalidStaffId);
+        String newProjectId = "P1003";
+        Project newProject = new Project(newProjectId, "Project 3", null, null, null, null, null, null, invalidProjectLeader);
 
-        Mockito.when(staffRepository.findById(updatedProject.getProjectLeader().getStaffId())).thenReturn(Optional.of(updatedProject.getProjectLeader()));
+        Mockito.when(staffRepository.findById(invalidStaffId)).thenReturn(Helper.getStaffById(staffs, invalidStaffId));
+        Mockito.when(projectRepository.save(newProject)).thenReturn(newProject);
+
+        MyException e = Assertions.assertThrows(MyException.class, () -> projectService.createProject(newProject));
+        Assertions.assertEquals("StaffService.STAFF_NOT_FOUND", e.getMessage());
+    }
+
+    @Test
+    public void updateProject() throws Exception {
+        String projectLeaderId = "S0";
+        Staff projectLeader = Helper.getStaffById(staffs, projectLeaderId).get();
+        String projectId = "P1000";
+        Project updatedProject = new Project(projectId, "Updated Project", null, null, null, null, null, null, projectLeader);
+
+        Mockito.when(staffRepository.findById(projectLeaderId)).thenReturn(Optional.of(projectLeader));
         Mockito.when(projectRepository.findById(projectId)).thenReturn(Helper.getProjectById(projects, projectId));
         Mockito.when(projectRepository.save(updatedProject)).thenReturn(updatedProject);
 
@@ -90,9 +110,50 @@ public class ProjectServiceTest {
     }
 
     @Test
+    public void updateProjectInvalidProjectId() throws Exception {
+        String projectLeaderId = "S0";
+        Staff projectLeader = Helper.getStaffById(staffs, projectLeaderId).get();
+        String invalidProjectId = "invalid project id";
+        Project updatedProject = new Project(invalidProjectId, "Updated Project", null, null, null, null, null, null, projectLeader);
+
+        Mockito.when(staffRepository.findById(projectLeaderId)).thenReturn(Optional.of(projectLeader));
+        Mockito.when(projectRepository.findById(invalidProjectId)).thenReturn(Helper.getProjectById(projects, invalidProjectId));
+        Mockito.when(projectRepository.save(updatedProject)).thenReturn(updatedProject);
+
+        MyException e = Assertions.assertThrows(MyException.class, () -> projectService.updateProject(invalidProjectId, updatedProject));
+        Assertions.assertEquals("ProjectService.PROJECT_NOT_FOUND", e.getMessage());
+    }
+
+    @Test
+    public void updateProjectInvalidLeaderId() throws Exception {
+        String invalidStaffId = "invalid staff id";
+        Staff invalidProjectLeader = new Staff();
+        invalidProjectLeader.setStaffId(invalidStaffId);
+        String projectId = "P1000";
+        Project updatedProject = new Project(projectId, "Updated Project", null, null, null, null, null, null, invalidProjectLeader);
+
+        Mockito.when(staffRepository.findById(invalidStaffId)).thenReturn(Helper.getStaffById(staffs, invalidStaffId));
+        Mockito.when(projectRepository.findById(projectId)).thenReturn(Helper.getProjectById(projects, projectId));
+        Mockito.when(projectRepository.save(updatedProject)).thenReturn(updatedProject);
+
+        MyException e = Assertions.assertThrows(MyException.class, () -> projectService.updateProject(projectId, updatedProject));
+        Assertions.assertEquals("StaffService.STAFF_NOT_FOUND", e.getMessage());
+    }
+
+    @Test
     public void deleteProject() throws Exception {
         String projectId = "P1000";
         Mockito.when(projectRepository.findById(projectId)).thenReturn(Helper.getProjectById(projects, projectId));
         Assertions.assertEquals(projects.get(0), projectService.deleteProject(projectId));
+    }
+
+    @Test
+    public void deleteProjectInvalidProjectId() throws Exception {
+        String invalidProjectId = "invalid project id";
+
+        Mockito.when(projectRepository.findById(invalidProjectId)).thenReturn(Helper.getProjectById(projects, invalidProjectId));
+
+        MyException e = Assertions.assertThrows(MyException.class, () -> projectService.deleteProject(invalidProjectId));
+        Assertions.assertEquals("ProjectService.PROJECT_NOT_FOUND", e.getMessage());
     }
 }
