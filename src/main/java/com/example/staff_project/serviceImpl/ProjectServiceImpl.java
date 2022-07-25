@@ -34,8 +34,7 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public Project getProject(String projectId) throws Exception {
-        Project project = projectRepository.findById(projectId).orElseThrow(() -> new MyException("ProjectService.PROJECT_NOT_FOUND"));
-        return project;
+        return projectRepository.findById(projectId).orElseThrow(() -> new MyException("ProjectService.PROJECT_NOT_FOUND"));
     }
 
     @Override

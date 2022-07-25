@@ -8,7 +8,6 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.Set;
 
 @Entity
 @Table(name = "staff")
@@ -34,8 +33,4 @@ public class Staff {
     private String unit;
     private String currentJobTitle;
     private LocalDate professionalStart;
-
-//    @ManyToMany(cascade = CascadeType.ALL)
-//    @JoinTable(name = "staff_project", joinColumns = @JoinColumn(name = "staff_id"), inverseJoinColumns = @JoinColumn(name = "project_id"))
-//    private Set<Project> projects;
 }

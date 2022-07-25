@@ -22,9 +22,8 @@ public class StaffIdGenerator implements IdentifierGenerator {
             ResultSet resultSet = statement.executeQuery("SELECT MAX(CAST((SUBSTRING(staff_id, 2)) AS DECIMAL(5, 0))) FROM staff");
 
             if (resultSet.next()) {
-                Integer id = resultSet.getInt(1) + 1;
-                String generatedId = prefix + id.toString();
-                return generatedId;
+                int id = resultSet.getInt(1) + 1;
+                return prefix + id;
             }
         } catch (SQLException e) {
             e.printStackTrace();

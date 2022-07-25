@@ -39,8 +39,7 @@ public class StaffProjectServiceImpl implements StaffProjectService {
 
     @Override
     public StaffProject getStaffProject(int staffProjectId) throws Exception {
-        StaffProject staffProject = staffProjectRepository.findById(staffProjectId).orElseThrow(() -> new MyException("StaffProjectService.STAFF_PROJECT_NOT_FOUND"));
-        return staffProject;
+        return staffProjectRepository.findById(staffProjectId).orElseThrow(() -> new MyException("StaffProjectService.STAFF_PROJECT_NOT_FOUND"));
     }
 
     @Override

@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class StaffServiceImpl implements StaffService {
@@ -30,8 +29,7 @@ public class StaffServiceImpl implements StaffService {
 
     @Override
     public Staff getStaff(String staffId) throws Exception {
-        Staff staff = staffRepository.findById(staffId).orElseThrow(() -> new MyException("StaffService.STAFF_NOT_FOUND"));
-        return staff;
+        return staffRepository.findById(staffId).orElseThrow(() -> new MyException("StaffService.STAFF_NOT_FOUND"));
     }
 
     @Override

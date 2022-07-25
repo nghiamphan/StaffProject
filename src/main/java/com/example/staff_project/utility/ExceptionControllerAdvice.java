@@ -21,19 +21,19 @@ public class ExceptionControllerAdvice {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorInfo> exceptionHandler(Exception e) {
         ErrorInfo errorInfo = new ErrorInfo(HttpStatus.INTERNAL_SERVER_ERROR.value(), environment.getProperty("General.EXCEPTION_MESSAGE"), LocalDateTime.now());
-        return new ResponseEntity<ErrorInfo>(errorInfo, HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(errorInfo, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(MyException.class)
     public ResponseEntity<ErrorInfo> myExceptionHandler(Exception e) {
         ErrorInfo errorInfo = new ErrorInfo(HttpStatus.BAD_REQUEST.value(), environment.getProperty(e.getMessage()), LocalDateTime.now());
-        return new ResponseEntity<ErrorInfo>(errorInfo, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(errorInfo, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler({MethodArgumentTypeMismatchException.class, HttpMessageNotReadableException.class})
     public ResponseEntity<ErrorInfo> methodArgumentTypeMismatchExceptionHandler(Exception e) {
         ErrorInfo errorInfo = new ErrorInfo(HttpStatus.BAD_REQUEST.value(), e.getMessage(), LocalDateTime.now());
-        return new ResponseEntity<ErrorInfo>(errorInfo, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(errorInfo, HttpStatus.BAD_REQUEST);
     }
 
 }

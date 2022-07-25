@@ -21,8 +21,7 @@ public class StaffProjectIdGenerator implements IdentifierGenerator {
             ResultSet resultSet = statement.executeQuery("SELECT MAX(staff_project_id) FROM staff_project");
 
             if (resultSet.next()) {
-                Integer generatedId = resultSet.getInt(1) < 101 ? 101 : resultSet.getInt(1) + 1;
-                return generatedId;
+                return resultSet.getInt(1) < 101 ? 101 : resultSet.getInt(1) + 1;
             }
         } catch (SQLException e) {
             e.printStackTrace();
