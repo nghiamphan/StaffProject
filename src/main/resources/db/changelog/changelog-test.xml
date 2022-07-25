@@ -1,0 +1,72 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.13.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd">
+    <changeSet author="pmnghia" id="1">
+        <createTable tableName="project">
+            <column name="project_id" type="VARCHAR(255)">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="project_pkey"/>
+            </column>
+            <column name="project_name" type="VARCHAR(255)"/>
+            <column name="description" type="TEXT"/>
+            <column name="client" type="VARCHAR(255)"/>
+            <column name="start_date" type="date"/>
+            <column name="end_date" type="date"/>
+            <column name="status" type="VARCHAR(15)"/>
+            <column name="note" type="TEXT"/>
+            <column name="project_leader" type="VARCHAR(15)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="pmnghia" id="2">
+        <createTable tableName="staff">
+            <column name="staff_id" type="VARCHAR(15)">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="staff_pkey"/>
+            </column>
+            <column name="account" type="VARCHAR(15)"/>
+            <column name="full_name" type="VARCHAR(255)"/>
+            <column name="first_name" type="VARCHAR(15)"/>
+            <column name="email" type="VARCHAR(63)"/>
+            <column name="gender" type="VARCHAR(1)"/>
+            <column name="status" type="VARCHAR(15)"/>
+            <column name="birth_date" type="date"/>
+            <column name="join_date" type="date"/>
+            <column name="full_time_start" type="date"/>
+            <column name="leave_date" type="date"/>
+            <column name="unit" type="VARCHAR(255)"/>
+            <column name="current_job_title" type="VARCHAR(255)"/>
+            <column name="professional_start" type="date"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="pmnghia" id="3">
+        <createTable tableName="staff_project">
+            <column autoIncrement="true" name="staff_project_id" type="INTEGER">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="staff_project_pkey"/>
+            </column>
+            <column name="staff_id" type="VARCHAR(15)"/>
+            <column name="project_id" type="VARCHAR(255)"/>
+            <column name="start_date" type="date"/>
+            <column name="end_date" type="date"/>
+            <column name="status" type="VARCHAR(15)"/>
+            <column name="note" type="TEXT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="pmnghia" id="4">
+        <addForeignKeyConstraint baseColumnNames="project_leader" baseTableName="project"
+                                 constraintName="project_project_leader_fkey" deferrable="false"
+                                 initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT"
+                                 referencedColumnNames="staff_id" referencedTableName="staff" validate="true"/>
+    </changeSet>
+    <changeSet author="pmnghia" id="5">
+        <addForeignKeyConstraint baseColumnNames="project_id" baseTableName="staff_project"
+                                 constraintName="staff_project_project_id_fkey" deferrable="false"
+                                 initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT"
+                                 referencedColumnNames="project_id" referencedTableName="project" validate="true"/>
+    </changeSet>
+    <changeSet author="pmnghia" id="6">
+        <addForeignKeyConstraint baseColumnNames="staff_id" baseTableName="staff_project"
+                                 constraintName="staff_project_staff_id_fkey" deferrable="false"
+                                 initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT"
+                                 referencedColumnNames="staff_id" referencedTableName="staff" validate="true"/>
+    </changeSet>
+</databaseChangeLog>
