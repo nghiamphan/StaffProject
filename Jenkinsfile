@@ -12,5 +12,6 @@ pipeline {
                 bat './mvnw test'
             }
         }
+        
     }
 }
