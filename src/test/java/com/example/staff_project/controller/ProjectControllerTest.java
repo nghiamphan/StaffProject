@@ -191,7 +191,7 @@ public class ProjectControllerTest {
 
     @Test
     public void deleteProject() throws Exception {
-        String projectId = "P1001";
+        String projectId = "P10011";
         mockMvc.perform(delete(url + projectId))
                 .andDo(print())
                 .andExpect(status().isOk())
