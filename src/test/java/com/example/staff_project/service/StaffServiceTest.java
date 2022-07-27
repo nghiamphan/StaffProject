@@ -103,5 +103,6 @@ public class StaffServiceTest {
 
         MyException e = Assertions.assertThrows(MyException.class, () -> staffService.deleteStaff(invalidStaffId));
         Assertions.assertEquals("StaffService.STAFF_NOT_FOUND", e.getMessage());
+        
     }
 }
