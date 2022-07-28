@@ -3,7 +3,8 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh './mvnw clean install -DskipTests --chmod +x mvnw'
+                sh "chmod +x -R ${env.WORKSPACE}"
+                sh './mvnw clean install -DskipTests'
             }
         }
 
