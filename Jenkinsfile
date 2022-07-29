@@ -17,13 +17,5 @@ pipeline {
                 bat './mvnw test'
             }
         }
-
-        stage('Build Image') {
-            steps{
-                script {
-                    dockerImage = docker.build registry
-                }
-            }
-        }
     }
 }
