@@ -1,8 +1,8 @@
 pipeline {
     agent any
     stages {
-        agent { image 'openjdk' }
         stage('Build') {
+            agent { image 'openjdk' }
             steps {
                 sh "chmod +x -R ${env.WORKSPACE}"
                 sh './mvnw clean install -DskipTests'
