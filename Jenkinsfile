@@ -9,10 +9,12 @@ pipeline {
         }
 
         stage('Unit Test') {
-            docker.image('postgres').withRun('-p 5432:5432 -e "POSTGRES_USERNAME=postgres" -e "POSTGRES_PASSWORD=password" -e "POSTGRES_DB=dbtest"') { c ->
-                sleep 60;
-            }
             steps {
+                script {
+                    docker.image('postgres').withRun('-p 5432:5432 -e "POSTGRES_USERNAME=postgres" -e "POSTGRES_PASSWORD=password" -e "POSTGRES_DB=dbtest"') { c ->
+                        sleep 60;
+                    }
+                }
                 sh "chmod +x -R ${env.WORKSPACE}"
                 sh './mvnw test'
             }
