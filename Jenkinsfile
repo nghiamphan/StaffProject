@@ -8,7 +8,7 @@ pipeline {
             }
         }
 
-        stage('Unit Test') {
+//         stage('Unit Test') {
 //             agent {
 //                 docker {
 //                     image 'postgres'
@@ -21,6 +21,6 @@ pipeline {
 //             steps {
 //                 sh './mvnw test'
 //             }
-        }
+//         }
     }
 }
