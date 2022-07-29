@@ -14,9 +14,9 @@ pipeline {
                 script {
                     docker.image('postgres').withRun("-p 5432:5432 -e POSTGRES_USERNAME=postgres -e POSTGRES_PASSWORD=password -e POSTGRES_DB=dbtest --name dbd") { c ->
 //                         sh "chmod +x -R ${env.WORKSPACE}";
-//                         sleep 30;
+                        sleep 5;
                         sh "docker logs ${c.id}"
-                        sh 'mvn test';
+                        sh './mvnw test';
                     }
                 }
 //                 sh "chmod +x -R ${env.WORKSPACE}"
