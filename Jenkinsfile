@@ -10,9 +10,7 @@ pipeline {
 
         stage('Unit Test') {
             agent {
-                docker {
-                    image 'staff-project:latest'
-                }
+                dockerfile true
             }
             steps {
                 sh "chmod +x -R ${env.WORKSPACE}"
