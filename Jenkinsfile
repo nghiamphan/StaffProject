@@ -18,9 +18,9 @@ pipeline {
 //                     reuseNode true
 //                 }
 //             }
-            steps {
-                sh './mvnw test'
-            }
+//             steps {
+//                 sh './mvnw test'
+//             }
         }
     }
 }
