@@ -28,6 +28,6 @@
 
 node {
     stage('build') {
-        sh 'mvn clean install -DskipTests'
+        sh 'mvnw clean install -DskipTests'
     }
 }
