@@ -1,8 +1,5 @@
 pipeline {
-//     agent any
-    agent {
-        docker { image 'postgres' }
-    }
+    agent any
     stages {
         stage('Build') {
             steps {
