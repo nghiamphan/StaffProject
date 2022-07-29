@@ -32,7 +32,8 @@ node {
     }
 
     stage('test') {
-        docker.image('postgres').withRun("-p 5432:5432 -e POSTGRES_USERNAME=postgres -e POSTGRES_PASSWORD=password -e POSTGRES_DB=dbtest --name dbd") { c ->
+         sh "docker network create -d bridge test-pipeline"
+        docker.image('postgres').withRun("-p 5432:5432 -e POSTGRES_USERNAME=postgres -e POSTGRES_PASSWORD=password -e POSTGRES_DB=dbtest  --network test-pipeline --name dbd") { c ->
             sleep 5
             sh './mvnw test'
         }
