@@ -32,7 +32,7 @@ node {
     }
 
     stage('test') {
-        docker.image('postgres').withRun("-p 5432:5432 -e POSTGRES_USERNAME=postgres -e POSTGRES_PASSWORD=password -e POSTGRES_DB=dbtest  --name db") { c ->
+        docker.image('postgres').withRun("-p 5432:5432 -e POSTGRES_USERNAME=postgres -e POSTGRES_PASSWORD=password -e POSTGRES_DB=dbtest  --name dbb") { c ->
             sleep 5
             sh 'pg_isready -h localhost'
             sh './mvnw test'
