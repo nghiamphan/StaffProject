@@ -11,7 +11,7 @@ pipeline {
         stage('Unit Test') {
             agent {
                 docker {
-                    image 'postgres:latest'
+                    image 'staff-project:latest'
                 }
             }
             steps {
