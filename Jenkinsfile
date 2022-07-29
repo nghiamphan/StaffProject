@@ -32,11 +32,9 @@ node {
     }
 
     stage('test') {
-        def db = docker.image('postgres').withRun("-p 5432:5432 -e POSTGRES_USERNAME=postgres -e POSTGRES_PASSWORD=password -e POSTGRES_DB=dbtest  --name dbd") { c ->
-//             sleep 5
-            docker.image('localhost:8080').inside('-P --link db:db') {
-                sh './mvnw test'
-            }
+        docker.image('postgres').withRun("-p 5432:5432 -e POSTGRES_USERNAME=postgres -e POSTGRES_PASSWORD=password -e POSTGRES_DB=dbtest  --name dbd") { c ->
+            sleep 5
+            sh './mvnw test'
         }
     }
 }
