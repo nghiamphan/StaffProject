@@ -9,6 +9,11 @@ pipeline {
         }
 
         stage('Unit Test') {
+            agent {
+                docker {
+                    image 'postgres:latest'
+                }
+            }
             steps {
                 sh './mvnw test'
             }
