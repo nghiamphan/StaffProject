@@ -14,7 +14,7 @@ pipeline {
             }
             steps {
                 sh "chmod +x -R ${env.WORKSPACE}"
-                sh './mvnw test'
+//                 sh './mvnw test'
             }
         }
     }
