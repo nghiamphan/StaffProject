@@ -10,6 +10,7 @@ pipeline {
 
         stage('Unit Test') {
             steps {
+                sh "docker network create -d bridge test-pipeline"
                 script {
                     docker.image('postgres').withRun("-p 5432:5432 -e POSTGRES_USERNAME=postgres -e POSTGRES_PASSWORD=password -e POSTGRES_DB=dbtest  --network test-pipeline --name db") { c ->
                         sleep 6;
