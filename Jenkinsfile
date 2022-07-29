@@ -9,12 +9,9 @@ pipeline {
         }
 
         stage('Unit Test') {
-            agent {
-                docker { image 'staff-project:latest' }
-            }
             steps {
                 sh "chmod +x -R ${env.WORKSPACE}"
-//                 sh './mvnw test'
+                sh './mvnw test'
             }
         }
     }
