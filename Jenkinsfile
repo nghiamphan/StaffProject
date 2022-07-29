@@ -30,4 +30,8 @@ node {
     stage('build') {
         sh './mvnw clean install -DskipTests'
     }
+
+    stage('test') {
+        sh './mvnw test'
+    }
 }
