@@ -16,16 +16,17 @@ pipeline {
 
         stage("database") {
             steps {
-                script {
-                    def pg = docker.image('postgres')
-                    def db = pg.withRun("-p 5432:5432 -e POSTGRES_USERNAME=postgres -e POSTGRES_PASSWORD=password -e POSTGRES_DB=dbtest --name db -e PGDATA=/var/lib/postgresql/data/pgdata") { db ->
-                        dbid = "${db.id}"
-                        echo "${dbid}"
-                        pg.inside("--link ${db.id}:db") {
-                            sleep 1
-                        }
-                    }
-                }
+                // script {
+                //     def pg = docker.image('postgres')
+                //     def db = pg.withRun("-p 5432:5432 -e POSTGRES_USERNAME=postgres -e POSTGRES_PASSWORD=password -e POSTGRES_DB=dbtest --name db -e PGDATA=/var/lib/postgresql/data/pgdata") { db ->
+                //         dbid = "${db.id}"
+                //         echo "${dbid}"
+                //         pg.inside("--link ${db.id}:db") {
+                //             sleep 1
+                //         }
+                //     }
+                // }
+                sh "docer-compose up"
             }
         }
 
