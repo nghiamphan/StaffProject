@@ -1,10 +1,9 @@
 pipeline {
     agent any
     environment {
-        SPRING_DATASOURCE_URL = 'jdbc:postgresql://db:5432/dbtest'
+        SPRING_DATASOURCE_URL = 'jdbc:postgresql://localhost:5432/dbtest'
         SPRING_DATASOURCE_USERNAME = 'postgres'
         SPRING_DATASOURCE_PASSWORD = 'password'
-        AAA = 'classpath:db/changelog/changelog-test.xml'
     }
     stages {
         stage('Build') {
