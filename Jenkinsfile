@@ -20,8 +20,8 @@ pipeline {
                     def db = pg.withRun("-p 5432:5432 -e POSTGRES_USERNAME=postgres -e POSTGRES_PASSWORD=password -e POSTGRES_DB=dbtest --name db -e PGDATA=/var/lib/postgresql/data/pgdata") { db ->
                         pg.inside("--link ${db.id}:db") {
                             sleep 1
-                            sh "docker logs ${db.id}"
                         }
+                        sh "docker logs ${db.id}"
                         sh './mvnw test'
                     }
                 }
