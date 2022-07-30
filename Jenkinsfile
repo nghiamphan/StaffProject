@@ -13,6 +13,14 @@ pipeline {
             }
         }
 
+        stage('Unit Test') {
+            steps {
+                script {
+                    def pg = docker.image('postgres')
+                }
+            }
+        }
+
 //         stage('Unit Test') {
 //             steps {
 
