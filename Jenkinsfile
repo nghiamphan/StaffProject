@@ -7,12 +7,12 @@ pipeline {
         SPRING_DATASOURCE_PASSWORD = 'password'
     }
     stages {
-        stage('Build') {
-            steps {
-                sh "chmod +x -R ${env.WORKSPACE}"
-                sh './mvnw clean install -DskipTests'
-            }
-        }
+//         stage('Build') {
+//             steps {
+//                 sh "chmod +x -R ${env.WORKSPACE}"
+//                 sh './mvnw clean install -DskipTests'
+//             }
+//         }
 
         stage("database") {
          steps {
@@ -20,7 +20,6 @@ pipeline {
                  def pg = docker.image('postgres')
                  def db = pg.withRun("-p 5432:5432 -e POSTGRES_USERNAME=postgres -e POSTGRES_PASSWORD=password -e POSTGRES_DB=dbtest --name db -e PGDATA=/var/lib/postgresql/data/pgdata") { db ->
                      sh 'dbid = ${db.id}'
-                     echo dbid
                      pg.inside("--link ${db.id}:db") {
                          sleep 1
                      }
