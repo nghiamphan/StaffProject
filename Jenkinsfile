@@ -17,7 +17,7 @@ pipeline {
             steps {
 
                 script {
-                    docker.image('postgres').withRun("-p 5432:5432 -e POSTGRES_USERNAME=postgres -e POSTGRES_PASSWORD=password -e POSTGRES_DB=dbtest --net jenkins") { c ->
+                    docker.image('postgres').withRun("-p 5432:5432 -e POSTGRES_USERNAME=postgres -e POSTGRES_PASSWORD=password -e POSTGRES_DB=dbtest --name db --net jenkins") { c ->
 //                         sh "chmod +x -R ${env.WORKSPACE}";
 //                         sleep 5;
                         sh "docker logs ${c.id}"
