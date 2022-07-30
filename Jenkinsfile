@@ -26,7 +26,7 @@ pipeline {
                 //         }
                 //     }
                 // }
-                sh "docker-compose -f docker-compose.test.yml up --force-recreate"
+                sh "docker-compose -f docker-compose.test.yml up --build --exit-code-from app"
 //                 sh 'sleep 5'
 //                 sh "docker-compose -f docker-compose.yml up --force-recreate"
 //                 sh './mvnw test'
