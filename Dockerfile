@@ -12,4 +12,3 @@ COPY src ./src
 RUN ./mvnw test
 
 #CMD ["./mvnw", "spring-boot:runtest"]
-#RUN ./mvnw run verify
