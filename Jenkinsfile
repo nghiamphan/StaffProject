@@ -37,7 +37,7 @@ pipeline {
 //                         sh './mvnw test';
 //                     }
 //                 }
-                sh "chmod +x -R ${env.WORKSPACE}"
+//                 sh "chmod +x -R ${env.WORKSPACE}"
 //                 sh './mvnw test'
 //             }
 //         }
