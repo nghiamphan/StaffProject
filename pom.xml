@@ -15,7 +15,6 @@
 	<description>Staff - Project Demo</description>
 	<properties>
 		<java.version>17</java.version>
-		<spring.profiles.active>local,no-liquibase</spring.profiles.active>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -27,10 +26,10 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 
-		<dependency>
-			<groupId>org.liquibase</groupId>
-			<artifactId>liquibase-core</artifactId>
-		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>org.liquibase</groupId>-->
+<!--			<artifactId>liquibase-core</artifactId>-->
+<!--		</dependency>-->
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
