@@ -12,14 +12,14 @@ services:
       POSTGRES_USERNAME: postgres
       POSTGRES_PASSWORD: password
 
-  app:                    # The name of the service, can be anything
-    image: staff-project  # Declares which image to use
-    build: .              # Declares where to build if image is not found
-    ports:                # Declares the ports to publish
-      - "8080:8080"
-    depends_on:
-      - db
-    environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/liquibase_test
-      - SPRING_DATASOURCE_USERNAME=postgres
-      - SPRING_DATASOURCE_PASSWORD=password
+#  app:                    # The name of the service, can be anything
+#    image: staff-project  # Declares which image to use
+#    build: .              # Declares where to build if image is not found
+#    ports:                # Declares the ports to publish
+#      - "8080:8080"
+#    depends_on:
+#      - db
+#    environment:
+#      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/liquibase_test
+#      - SPRING_DATASOURCE_USERNAME=postgres
+#      - SPRING_DATASOURCE_PASSWORD=password
