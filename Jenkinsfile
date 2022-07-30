@@ -26,7 +26,7 @@ pipeline {
                 //         }
                 //     }
                 // }
-                sh "docer-compose up"
+                sh "docker-compose up"
             }
         }
 
