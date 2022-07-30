@@ -10,4 +10,4 @@ RUN ./mvnw dependency:go-offline
 COPY src ./src
 
 #CMD ["./mvnw", "spring-boot:runtest"]
-RUN ./mvnw run verify
+#RUN ./mvnw run verify
