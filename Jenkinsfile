@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        SPRING_DATASOURCE_URL = 'jdbc:postgresql://localhost:5432/dbtest'
+        SPRING_DATASOURCE_URL = 'jdbc:postgresql://:5432/dbtest'
         SPRING_DATASOURCE_USERNAME = 'postgres'
         SPRING_DATASOURCE_PASSWORD = 'password'
     }
