@@ -26,7 +26,7 @@ pipeline {
                 //         }
                 //     }
                 // }
-                sh "docker-compose up"
+                sh "docker-compose up --force-recreate"
             }
         }
 
