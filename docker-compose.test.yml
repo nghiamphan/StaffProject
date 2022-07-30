@@ -8,12 +8,12 @@ services:
     ports:
       -  "5432:5432"
     environment:
-      POSTGRES_DB: liquibase_test
+      POSTGRES_DB: dbtest
       POSTGRES_USERNAME: postgres
       POSTGRES_PASSWORD: password
 
   app:                    # The name of the service, can be anything
-    image: staff-project-test  # Declares which image to use
+#    image: staff-project-test  # Declares which image to use
     build:
       context: .
       dockerfile: DockerfileTest
@@ -22,6 +22,6 @@ services:
     depends_on:
       - db
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/liquibase_test
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/dbtest
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=password
