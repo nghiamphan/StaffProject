@@ -27,6 +27,7 @@ pipeline {
                 //     }
                 // }
                 sh "docker-compose up --force-recreate"
+                sh './mvnw test'
             }
         }
 
