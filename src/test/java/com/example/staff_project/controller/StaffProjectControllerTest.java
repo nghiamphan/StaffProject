@@ -98,7 +98,7 @@ public class StaffProjectControllerTest {
     public void getStaffProjects() throws Exception {
         mockMvc.perform(get(url))
                 .andDo(print())
-                .andExpect(status().isBadRequest())
+                .andExpect(status().isOk())
                 .andExpect(content().string(containsString(staffProjects.get(staffProjects.size() - 1).getNote())));
     }
 
