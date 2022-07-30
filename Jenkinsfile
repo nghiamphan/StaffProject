@@ -13,8 +13,8 @@ pipeline {
             }
         }
 
-        stage('Unit Test') {
-            steps {
+//         stage('Unit Test') {
+//             steps {
 
 //                 script {
 //                     def pg = docker.image('postgres')
@@ -39,8 +39,8 @@ pipeline {
 //                 }
                 sh "chmod +x -R ${env.WORKSPACE}"
 //                 sh './mvnw test'
-            }
-        }
+//             }
+//         }
     }
 }
 
