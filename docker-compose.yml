@@ -1,19 +1,19 @@
 version: '3.7'            # Version 3.8 is quite new and should work
 
 services:
-  db:
-    image: postgres
-    build: .
-    restart: always
-    container_name: db
-    ports:
-      -  "5432:5432"
-    environment:
-      POSTGRES_DB: liquibase_test
-      POSTGRES_USERNAME: postgres
-      POSTGRES_PASSWORD: password
+#  db:
+#    image: postgres
+#    build: .
+#    restart: always
+#    container_name: db
+#    ports:
+#      -  "5432:5432"
+#    environment:
+#      POSTGRES_DB: liquibase_test
+#      POSTGRES_USERNAME: postgres
+#      POSTGRES_PASSWORD: password
 
-  tapp:                    # The name of the service, can be anything
+  app:                    # The name of the service, can be anything
     image: staff-project  # Declares which image to use
     build: .              # Declares where to build if image is not found
     ports:                # Declares the ports to publish
