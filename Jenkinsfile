@@ -17,6 +17,8 @@ pipeline {
             steps {
                 script {
                     def pg = docker.image('postgres')
+                    def db = pg.withRun("-p 5432:5432 -e POSTGRES_USERNAME=postgres -e POSTGRES_PASSWORD=password -e POSTGRES_DB=dbtest --name db -e PGDATA=/var/lib/postgresql/data/pgdata") {
+                    }
                 }
             }
         }
