@@ -1,9 +1,9 @@
 pipeline {
     agent any
     environment {
-        SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/liquibase_test
-        SPRING_DATASOURCE_USERNAME=postgres
-        SPRING_DATASOURCE_PASSWORD=password
+        SPRING_DATASOURCE_URL = 'jdbc:postgresql://db:5432/liquibase_test'
+        SPRING_DATASOURCE_USERNAME = 'postgres'
+        SPRING_DATASOURCE_PASSWORD = 'password'
     }
     stages {
         stage('Build') {
