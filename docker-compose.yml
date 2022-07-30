@@ -1,4 +1,4 @@
-version: '3.0'            # Version 3.8 is quite new and should work
+version: '3.8'            # Version 3.8 is quite new and should work
 
 services:
   db:
@@ -12,7 +12,7 @@ services:
       POSTGRES_USERNAME: postgres
       POSTGRES_PASSWORD: password
 
-  app:                    # The name of the service, can be anything
+  tapp:                    # The name of the service, can be anything
     image: staff-project  # Declares which image to use
     build: .              # Declares where to build if image is not found
     ports:                # Declares the ports to publish
