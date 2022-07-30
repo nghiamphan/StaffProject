@@ -4,6 +4,7 @@ pipeline {
         SPRING_DATASOURCE_URL = '/var/run/postgresql/.s.PGSQL.5432/dbtest'
         SPRING_DATASOURCE_USERNAME = 'postgres'
         SPRING_DATASOURCE_PASSWORD = 'password'
+        spring.liquibase.change-log = 'classpath:db/changelog/changelog-test.xml'
     }
     stages {
         stage('Build') {
