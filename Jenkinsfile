@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        SPRING_DATASOURCE_URL = 'jdbc:postgresql://:5432/dbtest'
+        SPRING_DATASOURCE_URL = 'jdbc:postgresql://l:5432/dbtest'
         SPRING_DATASOURCE_USERNAME = 'postgres'
         SPRING_DATASOURCE_PASSWORD = 'password'
     }
@@ -19,7 +19,7 @@ pipeline {
                 script {
                     docker.image('postgres').withRun("-p 5432:5432 -e POSTGRES_USERNAME=postgres -e POSTGRES_PASSWORD=password -e POSTGRES_DB=dbtest --name db --net jenkins") { c ->
 //                         sh "chmod +x -R ${env.WORKSPACE}";
-                        sleep 15;
+                        sleep 1;
                         sh "docker logs ${c.id}"
 //                         sh script: """
 //                             sleep 5
