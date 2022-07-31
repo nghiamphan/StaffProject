@@ -38,7 +38,7 @@ public class StaffServiceTest {
     @Test
     public void getStaffs() throws Exception {
         Mockito.when(staffService.getStaffs()).thenReturn(staffs);
-        Assertions.assertEquals(staffs.size(), staffService.getStaffs().size()+1);
+        Assertions.assertEquals(staffs.size(), staffService.getStaffs().size());
     }
 
     @Test
