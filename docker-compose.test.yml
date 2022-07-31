@@ -1,4 +1,4 @@
-version: '3.7'            # Version 3.8 is quite new and should work
+version: '3.7'
 
 services:
   db:
@@ -6,18 +6,18 @@ services:
     restart: always
     container_name: db
     ports:
-      -  "5432:5432"
+      - "5432:5432"
     environment:
       POSTGRES_DB: dbtest
       POSTGRES_USERNAME: postgres
       POSTGRES_PASSWORD: password
 
-  app:                    # The name of the service, can be anything
-#    image: staff-project-test  # Declares which image to use
+  app:
+    image: staff-project-test
     build:
       context: .
       dockerfile: DockerfileTest
-    ports:                # Declares the ports to publish
+    ports:
       - "8080:8080"
     depends_on:
       - db
