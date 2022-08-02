@@ -5,17 +5,12 @@ pipeline {
             steps {
 //                 sh "docker-compose -f docker-compose.test.yml up --build --exit-code-from app"
 //                 sh "docker-compose -f docker-compose.test.yml down"
-                script {
-//                     def props = readProperties(file: "application.properties")
-//                     if (props['prop1'] !== null) {
-//                         def newProps = """\nprop1=test1"""
-//                         writeFile(file: "application.properties", text: readFile(file: "application.properties") + newProps)
-//                     }
+
+                    def fileName = "src/main/resources/application.properties"
                     def newProps = """\nprop1=test1\nprop2=test2"""
-                    writeFile(file: "src/main/resources/application.properties", text: readFile(file: "src/main/resources/application.properties") + newProps)
-                    def str = readFile(file: "src/main/resources/application.properties")
+                    writeFile(file: fileName, text: readFile(file: fileName) + newProps)
                     println('Properties file content')
-                    echo str
+                    echo readFile(file: "src/main/resources/application.properties")
                 }
             }
         }
