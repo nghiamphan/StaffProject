@@ -12,7 +12,7 @@ pipeline {
 //                         writeFile(file: "application.properties", text: readFile(file: "application.properties") + newProps)
 //                     }
                         def newProps = """\nprop1=test1\nprop2=test2"""
-                        writeFile(file: "src/main/resources/application.properties", newProps)
+                        writeFile(file: "src/main/resources/application.properties", text: newProps)
 //                     def str = readFile(file: "application.properties")
 //                     println('Properties file content')
 //                     echo str
