@@ -6,7 +6,7 @@ pipeline {
 //                 sh "docker-compose -f docker-compose.test.yml up --build --exit-code-from app"
 //                 sh "docker-compose -f docker-compose.test.yml down"
                 script {
-                       rm "application.properties"
+                       sh "rm application.properties"
 //                     def props = readProperties(file: "application.properties")
 //                     if (props['prop1'] !== null) {
 //                         def newProps = """\nprop1=test1"""
