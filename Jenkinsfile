@@ -14,7 +14,7 @@ pipeline {
                     echo readFile(file: fileName)
 
                     def props = readProperties(file: fileName)
-                    echo prop['prop1']
+                    echo props['prop1']
                 }
             }
         }
