@@ -12,6 +12,9 @@ pipeline {
                     writeFile(file: fileName, text: readFile(file: fileName) + newProps)
                     println('Properties file content')
                     echo readFile(file: fileName)
+
+                    def props = readProperties(file: fileName)
+                    echo prop['prop1']
                 }
             }
         }
