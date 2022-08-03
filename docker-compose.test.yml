@@ -1,7 +1,7 @@
 version: '3.7'
 
 services:
-  db:
+  db_test:
     image: postgres
     restart: always
     container_name: db-test
@@ -23,6 +23,6 @@ services:
     depends_on:
       - db
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/dbtest
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db_test:5432/dbtest
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=password
