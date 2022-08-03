@@ -2,10 +2,7 @@ pipeline {
     agent any
     stages {
         stage("test") {
-            steps {
-                sh "docker-compose -f docker-compose.test.yml up --build --exit-code-from app"
-                sh "docker-compose -f docker-compose.test.yml down"
-
+            steps {              
                 script {
                     def fileName = "src/main/resources/application.properties"
                     def newProps = """\nprop1=test1\nprop2=test2"""
@@ -16,6 +13,9 @@ pipeline {
                     def props = readProperties(file: fileName)
                     echo props['prop1']
                 }
+
+                sh "docker-compose -f docker-compose.test.yml up --build --exit-code-from app"
+                sh "docker-compose -f docker-compose.test.yml down"
             }
         }
     }
