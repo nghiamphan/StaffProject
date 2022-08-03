@@ -4,7 +4,7 @@ services:
   db:
     image: postgres
     restart: always
-    container_name: db
+    container_name: db-test
     ports:
       - "5432:5432"
     environment:
@@ -17,6 +17,7 @@ services:
     build:
       context: .
       dockerfile: DockerfileTest
+    container_name: staff-project-test
     ports:
       - "8080:8080"
     depends_on:
