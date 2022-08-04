@@ -30,7 +30,7 @@ services:
     depends_on:
       - docker-dind
     environment:
-      DOCKER_HOST: tcp://docker-dind:2376
+      DOCKER_HOST: tcp://docker_dind:2376
       DOCKER_CERT_PATH: /certs/client
       DOCKER_TLS_VERIFY: 1
     networks:
