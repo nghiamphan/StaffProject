@@ -1,0 +1,37 @@
+version: '3.8'            # Version 3.8 is quite new and should work
+
+services:
+  docker-dind:
+    image: docker:dind
+    container_name: docker-dind
+    volumes:
+      - jenkins-data:/var/jenkins_home
+      - jenkins-docker-certs:/certs/client
+
+    environment:
+      DOCKER_TLS_CERTDIR: /certs
+    privileged: true
+    networks:
+      - jenkins-network
+
+  jenkins-docker:
+    image: jenkins-docker
+    build:
+      context: .
+      dockerfile: DockerfileJenkins
+    container_name: jenkins-docker
+    volumes:
+      - jenkins-data:/var/jenkins_home
+      - jenkins-docker-certs:/certs/client:ro
+    ports:
+      - "7080:8080"
+    environment:
+      DOCKER_HOST: tcp://docker:2376
+      DOCKER_CERT_PATH: /certs/client
+      DOCKER_TLS_VERIFY: 1
+      JENKINS_OPTS: --argumentsRealm.roles.user=admin --argumentsRealm.passwd.admin=password --argumentsRealm.roles.admin=admin
+    networks:
+      - jenkins-network
+
+networks:
+  jenkins-network:
