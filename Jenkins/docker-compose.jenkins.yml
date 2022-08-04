@@ -29,9 +29,12 @@ services:
       DOCKER_HOST: tcp://docker:2376
       DOCKER_CERT_PATH: /certs/client
       DOCKER_TLS_VERIFY: 1
-      JENKINS_OPTS: --argumentsRealm.roles.user=admin --argumentsRealm.passwd.admin=password --argumentsRealm.roles.admin=admin
     networks:
       - jenkins-network
+
+volumes:
+  jenkins-data:
+  jenkins-docker-certs:
 
 networks:
   jenkins-network:
