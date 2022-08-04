@@ -38,8 +38,10 @@ services:
 
   app:                    # The name of the service, can be anything
     image: staff-project  # Declares which image to use
-    build: .              # Declares where to build if image is not found
-    container_name: staff-project
+    build:                # Declares where to build if image is not found
+      context: ../
+      dockerfile: Keycloak/Dockerfile
+    container_name: staff_project
     ports:                # Declares the ports to publish
       - "8081:8080"
     depends_on:
