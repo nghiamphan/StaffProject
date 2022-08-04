@@ -3,7 +3,7 @@ version: '3.8'            # Version 3.8 is quite new and should work
 services:
   docker-dind:
     image: docker:dind
-    container_name: docker-dind
+    container_name: docker_dind
     volumes:
       - jenkins-data:/var/jenkins_home
       - jenkins-docker-certs:/certs/client
@@ -21,7 +21,7 @@ services:
     build:
       context: .
       dockerfile: DockerfileJenkins
-    container_name: jenkins-docker
+    container_name: jenkins_docker
     volumes:
       - jenkins-data:/var/jenkins_home
       - jenkins-docker-certs:/certs/client:ro
