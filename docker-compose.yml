@@ -1,21 +1,18 @@
-version: '3.7'            # Version 3.8 is quite new and should work
+version: '3.8'            # Version 3.8 is quite new and should work
 
 services:
   db_keycloak:
-    image: postgres:11
+    image: postgres
     container_name: db_keycloak
-#    volumes:
-#      - ./db-data:/var/lib/postgresql/datavolumes:
-#      - ./db-data:/var/lib/postgresql/data
-#    ports:
-#      - "5433:5432"
+    volumes:
+      - ./db-data:/var/lib/postgresql/data
     environment:
       POSTGRES_DB: keycloak
       POSTGRES_USERNAME: postgres
       POSTGRES_PASSWORD: password
 
   keycloak:
-    image: jboss/keycloak
+    image: jboss/keycloak # https://hub.docker.com/r/jboss/keycloak
     container_name: keycloak
     environment:
       DB_VENDOR: POSTGRES
@@ -34,8 +31,6 @@ services:
     image: postgres
     restart: always
     container_name: db
-    ports:
-      - "5432:5432"
     environment:
       POSTGRES_DB: liquibase_test
       POSTGRES_USERNAME: postgres
@@ -46,12 +41,12 @@ services:
     build: .              # Declares where to build if image is not found
     container_name: staff-project
     ports:                # Declares the ports to publish
-      - "8080:8080"
+      - "8081:8080"
     depends_on:
       - db
       - keycloak
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/liquibase_test
-      - SPRING_DATASOURCE_USERNAME=postgres
-      - SPRING_DATASOURCE_PASSWORD=password
-      - KEYCLOAK_AUTH-SERVER-URL=http://localhost:9080/auth
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/liquibase_test
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: password
+      KEYCLOAK_AUTH-SERVER-URL: http://keycloak:8080/auth

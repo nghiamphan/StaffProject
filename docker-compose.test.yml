@@ -5,8 +5,6 @@ services:
     image: postgres
     restart: always
     container_name: db-test
-    ports:
-      - "5432:5432"
     environment:
       POSTGRES_DB: dbtest
       POSTGRES_USERNAME: postgres
@@ -19,10 +17,10 @@ services:
       dockerfile: DockerfileTest
     container_name: staff-project-test
     ports:
-      - "8080:8080"
+      - "8082:8080"
     depends_on:
       - db_test
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://db_test:5432/dbtest
-      - SPRING_DATASOURCE_USERNAME=postgres
-      - SPRING_DATASOURCE_PASSWORD=password
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db_test:5432/dbtest
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: password
