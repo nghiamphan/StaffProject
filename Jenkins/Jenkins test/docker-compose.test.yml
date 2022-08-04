@@ -13,8 +13,8 @@ services:
   app:
     image: staff-project-test
     build:
-      context: .
-      dockerfile: DockerfileTest
+      context: ../..
+      dockerfile: ../../DockerfileTest
     container_name: staff-project-test
     ports:
       - "8082:8080"
