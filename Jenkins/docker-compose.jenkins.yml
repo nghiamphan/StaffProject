@@ -27,6 +27,8 @@ services:
       - jenkins-docker-certs:/certs/client:ro
     ports:
       - "7080:8080"
+    depends_on:
+      - docker-dind
     environment:
       DOCKER_HOST: tcp://dockerdindalias:2376
       DOCKER_CERT_PATH: /certs/client
