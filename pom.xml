@@ -68,18 +68,6 @@
 	</dependencyManagement>
 
 	<build>
-<!--		<resources>-->
-<!--			<resource>-->
-<!--				-->
-<!--			</resource>-->
-<!--		</resources>-->
-		<sourceDirectory>backend/main</sourceDirectory>
-		<resources>
-			<resource>
-				<directory>backend/main/resources</directory>
-			</resource>
-		</resources>
-		<testSourceDirectory>backend/test/java</testSourceDirectory>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
